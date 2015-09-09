@@ -1,5 +1,7 @@
     *{margin: 0;padding: 0;list-style: none;}
     html{font-size: 20px;}
+    body{overflow: hidden;font-family: 宋体, sans-serif, arial;font-size: 12px;}
+    h3 {}
     a{text-decoration: none;color: #fff;}
     /*size*/
     #size {position: fixed;width: 100%;height: 100%;background: #000;font-size: 16px;color: #fff;text-align: center;z-index: 1000;}
@@ -18,7 +20,7 @@
     header ul {margin-top: 1.6rem;float: right;margin-right: 1rem;}
     header ul li {width: 2.1rem;height: 1rem;margin-right: 2rem;float: left}
     header ul li a{width: 100%;height: 100%;color: #fff;text-decoration: none;font-size: 0.6rem;display: block;line-height: 1rem;text-align: center;}
-    header ul li.active{border-bottom: 0.1rem solid red;}
+    header ul li.active{border-bottom: 2px solid red;}
     /*page1*/
         .page1 {position: fixed;width: 64rem;height: 26.8rem;left: 0;top: 3.7rem;}
         .page1 nav{position: absolute;left: 0;top: 0;width: 7.4rem;height: 26.8rem;}
@@ -34,7 +36,7 @@
         .page1 .mainList ul li {width: 10.4rem;height: 7.35rem;border-bottom: 1px solid #333;margin-right: 0.8rem;margin-bottom: 1rem;float: left;opacity: 0;transition:500ms all ease-in;}
         .mainList ul li a {width: 100%;height: 100%;display: block}
         .mainList ul li a img {width: 10.4rem;height: 5.9rem;}
-.mainList ul li a h3 {font-size: 0.6rem;line-height: 1.45rem;margin-left: 0.4rem;}
+.mainList ul li a h3 {font-size: 0.6rem;line-height: 1.45rem;margin-left: 0.4rem;font-weight: normal;}
         /*page2*/
         .page2 {position: fixed;width: 64rem;height: 26.8rem;left: 0;top: 3.7rem;display: none;}
         .page2 .content2 {width: 31rem;height: 11rem;margin-left: -15.5rem;margin-top: -5.5rem;position: absolute;top: 50%;left: 50%;}
