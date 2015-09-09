@@ -38,7 +38,6 @@
 window.onload=window.onresize=function(){
 //计算rem
     var oSize=document.getElementById('size');
-        console.log(document.documentElement.clientWidth);
     if(document.documentElement.clientWidth<1024){
         oSize.style.display="block";
         return;
@@ -307,7 +306,7 @@ function moveSVG(obj,json,option){
             <ul>
                 <li ng-repeat="item in arr1">
                     <a href="{{item.src}}" target="_blank">
-                    <img src={{item.number}}>
+                    <img src="{{item.number}}">
                     <h3>{{item.tit}}</h3>
                     </a>
                 </li>
