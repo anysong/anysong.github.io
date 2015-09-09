@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>3D图片环</title>
+<style>
+*{ margin:0; padding:0; list-style:none;}
+html,body{ overflow:hidden;}
+body{ background:#000;}
+#box{ width:133px; height:200px; background:#ccc; position:absolute; left:50%; margin-left:-65px; top:200px; transform:perspective(800px) rotateX(-10deg); transform-style:preserve-3d;}
+#box div{ width:100%; height:100%; position:absolute; left:0; top:0; background:url(img/ani/1.jpg) no-repeat; border-radius:8px; box-shadow:0 0 10px 3px #fff;}
+
+#box div span{ width:100%; height:100%; position:absolute; left:0; top:0; transform:translateY(15px) scale(1,-1); transform-origin:bottom center; -webkit-mask:-webkit-linear-gradient(rgba(0,0,0,0) 40%, rgba(0,0,0,1)); opacity:0.4; border-radius:8px; box-shadow:0 0 10px 3px #fff;}
+
+</style>
+<script>
+window.onload=function(){
+	var oBox=document.getElementById('box');	
+	
+	var N=11;
+	
+	for(var i=0; i<11; i++){
+		var oDiv=document.createElement('div');
+		oDiv.style.backgroundImage='url(img/ani/'+(i+1)+'.jpg)';
+		oBox.appendChild(oDiv);
+		
+		oDiv.innerHTML='<span></span>';
+		oDiv.children[0].style.backgroundImage='url(img/ani/'+(i+1)+'.jpg)';
+		
+		oDiv.style.transition='1s all ease '+(N-i)*300+'ms';
+		;(function(oDiv,i){
+			setTimeout(function(){
+				oDiv.style.transform='rotateY('+360/N*i+'deg) translateZ(300px)';
+			},0);
+		})(oDiv,i);
+	}
+	
+	var y=0;
+	var x=-10;
+	var lastY=0;
+	var iSpeedY=0;
+	var timer=null;
+	
+	var aDiv=oBox.children;
+	
+	aDiv[0].addEventListener('transitionend',function(){
+		keyControl();
+		change();
+		mouseControl();
+	},false);
+	
+	function mouseControl(){
+		oBox.onmousedown=function(ev){
+			clearInterval(timer);
+			clearMove();
+			
+			var disX=ev.clientX-y;
+			
+			document.onmousemove=function(ev){
+				y=ev.clientX-disX;
+				
+				change();
+				
+				iSpeedY=ev.clientX-lastY;
+				
+				lastY=ev.clientX;
+			};
+			document.onmouseup=function(){
+				document.onmousemove=null;
+				document.onmouseup=null;
+				
+				timer=setInterval(function(){
+					iSpeedY*=0.95;
+					y+=iSpeedY;
+					change();
+				},30);	
+			};
+			return false;
+		};	
+	}
+	
+	
+	function keyControl(){
+		document.onkeydown=function(ev){
+			if(ev.keyCode==37){
+				move();
+				y-=360/N;
+				change();	
+			}
+			if(ev.keyCode==39){
+				move();
+				y+=360/N;
+				change();
+			}
+			if(ev.keyCode==38){
+				x+=1;
+				oBox.style.transform='perspective(800px) rotateX('+x+'deg)';	
+			}
+			if(ev.keyCode==40){
+				x-=1;
+				oBox.style.transform='perspective(800px) rotateX('+x+'deg)';	
+			}
+		};	
+	}
+	
+	function move(){
+		for(var i=0; i<aDiv.length; i++){
+			aDiv[i].style.transition='1s all ease';
+		}	
+	}
+	function clearMove(){
+		for(var i=0; i<aDiv.length; i++){
+			aDiv[i].style.transition='none';
+		}	
+	}
+	
+	
+	function change(){
+		for(var i=0; i<aDiv.length; i++){
+			
+			aDiv[i].style.transform='rotateY('+(360/N*i+y)+'deg) translateZ(300px)';
+			
+			var s=Math.abs((360/N*i+y)%360);
+			
+			s>180 && (s=360-s);
+			
+			s=180-s;
+			
+			var scale=s/180;
+			
+			scale<0.2 && (scale=0.2);
+			
+			//aDiv[i].innerHTML=scale;
+			
+			aDiv[i].style.opacity=scale;
+		}	
+	}
+};
+</script>
+</head>
+
+<body>
+<div id="box">
+</div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>canvas画圆</title>
+<style>
+body {background:black; text-align:center;}
+#c1 {background:white; /*width:900px; height:600px;*/}
+</style>
+<script>
+function d2a(n)
+{
+	return n*Math.PI/180;
+}
+
+window.onload=function ()
+{
+	var oC=document.getElementById('c1');
+	var gd=oC.getContext('2d');
+	
+	var i=0;
+	
+	gd.lineWidth=20;
+	
+	setInterval(function (){
+		gd.clearRect(0, 0, oC.width, oC.height);
+		
+		i++;
+		
+		gd.beginPath();
+		gd.arc(300, 250, 100, d2a(0), d2a(i), false);
+		
+		gd.stroke();
+	}, 30);
+};
+</script>
+</head>
+
+<body>
+<canvas id="c1" width="900" height="600"></canvas>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

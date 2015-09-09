@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>饼图</title>
+<style>
+body {background:black; text-align:center;}
+#c1 {background:white; /*width:900px; height:600px;*/}
+</style>
+<script>
+function d2a(n)
+{
+	return n*Math.PI/180;
+}
+
+window.onload=function ()
+{
+	var oC=document.getElementById('c1');
+	//图形上下文——绘图接口
+	var gd=oC.getContext('2d');
+	
+	//信息
+	var cx=450;
+	var cy=300;
+	var r=270;
+	
+	var arrColor=['#4f81bd', '#c0504d', '#9bbb59', '#8064a2'];
+	
+	function drawPie(start, end, color)
+	{
+		//第一步——第1条线
+		var x=cx+Math.sin(d2a(start))*r;
+		var y=cy-Math.cos(d2a(start))*r;
+		
+		gd.beginPath();		//清除
+		gd.moveTo(cx, cy);
+		gd.lineTo(x, y);
+		
+		//第二步——弧
+		gd.arc(cx, cy, r, d2a(start-90), d2a(end-90), false);
+		
+		//第三步
+		gd.closePath();
+		
+		//gd.stroke();
+		gd.fillStyle=color;
+		gd.fill();
+	}
+	
+	//数据
+	var arr=[345, 768, 52, 657];
+	var sum=0;
+	for(var i=0;i<arr.length;i++)	sum+=arr[i];
+	
+	var arrAng=[];
+	for(var i=0;i<arr.length;i++)	arrAng[i]=360*arr[i]/sum;
+	
+	var now=0;
+	
+	for(var i=0;i<arr.length;i++)
+	{
+		drawPie(now, now+arrAng[i], arrColor[i%arrColor.length]);
+		now+=arrAng[i];
+	}
+};
+</script>
+</head>
+
+<body>
+<canvas id="c1" width="900" height="600"></canvas>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

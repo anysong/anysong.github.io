@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>多指拖拽</title>
+<meta name="viewport" content="width=320" />
+<style>
+div {width:100px; height:100px; background:#CCC; position:absolute; left:10px; top:10px;}
+</style>
+<script>
+window.onload=function ()
+{
+	var aDiv=document.getElementsByTagName('div');
+	
+	for(var i=0;i<aDiv.length;i++)
+	{
+		addDrag(aDiv[i]);
+	}
+	
+	function addDrag(obj)
+	{
+		obj.addEventListener('touchstart', function (ev){
+			var touch=ev.targetTouches;
+			
+			var disX=touch[touch.length-1].clientX-obj.offsetLeft;
+			var disY=touch[touch.length-1].clientY-obj.offsetTop;
+			
+			var id=touch[touch.length-1].identifier;
+				console.log(ev)
+				//ev.changedTouches[0].identifier
+			
+			function fnMove(ev)
+			{
+				//console.log(ev);
+				if(id==ev.changedTouches[0].identifier)
+				{
+					obj.style.left=ev.changedTouches[0].clientX-disX+'px';
+					obj.style.top=ev.changedTouches[0].clientY-disY+'px';
+				}
+
+			}
+			function fnEnd(ev)
+			{
+				if(id==ev.changedTouches[0].identifier)
+				{
+					obj.removeEventListener('touchmove', fnMove, false);
+					obj.removeEventListener('touchend', fnEnd, false);
+				}
+				
+			}
+			
+			obj.addEventListener('touchmove', fnMove, false);
+			obj.addEventListener('touchend', fnEnd, false);
+			
+			ev.preventDefault();
+		}, false);
+	}
+};
+</script>
+</head>
+
+<body>
+<div>1</div>
+<div style="left:200px; top:100px;">2</div>
+<div style="left:50px; top:150px;">3</div>
+</body>
+</html>

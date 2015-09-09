@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>旋转缩放</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+<style>
+#div1 {width:200px; height:200px; background:#CCC; position:absolute; left:10px; top:50px;}
+</style>
+<script>
+//a	arc			弧度
+//d	degrees		角度
+function a2d(n)
+{
+	return n*180/Math.PI;
+}
+
+function getDeg(x1, y1, x2, y2)
+{
+	var a=x2-x1;
+	var b=y2-y1;
+	
+	return a2d(Math.atan2(b, a));
+}
+
+function getDis(x1, y1, x2, y2)
+{
+	var a=x1-x2;
+	var b=y1-y2;
+	
+	return Math.sqrt(a*a+b*b);
+}
+
+window.onload=function ()
+{
+	var oDiv=document.getElementById('div1');
+	
+	var r=0;	//当前角度
+	
+	oDiv.addEventListener('touchstart', function (ev){
+		if(ev.targetTouches.length==2)	//2个以上的，不管
+		{
+			var x0=ev.targetTouches[0].clientX;
+			var y0=ev.targetTouches[0].clientY;
+			var x1=ev.targetTouches[1].clientX;
+			var y1=ev.targetTouches[1].clientY;
+			
+			//缩放
+			//原始的距离
+			var oldDis=getDis(x0, y0, x1, y1);
+			
+			//原始的大小
+			var oldSize={w: oDiv.offsetWidth, h: oDiv.offsetHeight};
+			
+			//中心点的比例
+			//中心点的位置=手指中心点-oDiv.offsetLeft
+			var cx=(x0+x1)/2-oDiv.offsetLeft;
+			var cy=(y0+y1)/2-oDiv.offsetTop;
+			
+			//比例=中心点的位置/w
+			var centerScale={
+				x: cx/oDiv.offsetWidth,
+				y: cy/oDiv.offsetHeight
+			};
+			
+			//旋转
+			//原始的角度
+			var oldDeg=getDeg(x0, y0, x1, y1);
+			
+			//原始的角度
+			var oldR=r;
+			
+			function move(ev)
+			{
+				var x0=ev.targetTouches[0].clientX;
+				var y0=ev.targetTouches[0].clientY;
+				var x1=ev.targetTouches[1].clientX;
+				var y1=ev.targetTouches[1].clientY;
+				//document.getElementById('s1').innerHTML=new Date().getTime();
+				
+				//缩放
+				//新的距离
+				var newDis=getDis(x0, y0, x1, y1);
+				
+				document.getElementById('s1').innerHTML=(JSON.stringify({
+					newDis:		newDis,
+					w:			oldSize.w*newDis/oldDis,
+					h:			oldSize.h*newDis/oldDis
+				}));
+				
+				//算：新的大小
+				//老大小*新距离/老距离
+				oDiv.style.width=oldSize.w*newDis/oldDis+'px';
+				oDiv.style.height=oldSize.h*newDis/oldDis+'px';
+				
+				//算：新的位置
+				//新的中心点-40%*newWidth
+				var cx=(x0+x1)/2;
+				var cy=(y0+y1)/2;
+				
+				oDiv.style.left=cx-centerScale.x*oDiv.offsetWidth+'px';
+				oDiv.style.top=cy-centerScale.y*oDiv.offsetHeight+'px';
+				
+				//旋转
+				//新的角度
+				var newDeg=getDeg(x0, y0, x1, y1);
+				
+				var deg=newDeg-oldDeg;
+				r=oldR+deg;
+				
+				oDiv.style.WebkitTransform='rotate('+r+'deg)';
+			}
+			function end()
+			{
+				oDiv.removeEventListener('touchmove', move, false);
+				oDiv.removeEventListener('touchend', end, false);
+			}
+			
+			oDiv.addEventListener('touchmove', move, false);
+			oDiv.addEventListener('touchend', end, false);
+		}
+		
+		ev.preventDefault();
+	}, false);
+};
+</script>
+</head>
+
+<body>
+<span id="s1" style="font-size:12px;"></span>
+<div id="div1">移动端缩放</div>
+</body>
+</html>
+
+
+
+
+
+
+
+

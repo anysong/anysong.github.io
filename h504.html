@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>屏保线</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+<style>
+* {margin:0; padding:0; list-style:none;}
+
+body {background:#000; text-align:center;}
+#c1 {background:#000; display:block;}
+</style>
+<script>
+function rnd(n, m)
+{
+	return Math.floor(Math.random()*(m-n)+n);
+}
+
+window.onload=function ()
+{
+	var MAX_SPEED=10;
+	var NUM_OF_POINT=5;
+	var NUM_OF_SHADOW=20;
+	
+	var oC=document.getElementById('c1');
+	var gd=oC.getContext('2d');
+	
+	window.onresize=function ()
+	{
+		oC.width=document.documentElement.clientWidth;
+		oC.height=document.documentElement.clientHeight;
+	};
+	window.onresize();
+	
+	//颜色
+	var color={
+		r:			rnd(0, 256),
+		g:			rnd(0, 256),
+		b:			rnd(0, 256),
+		speedR:		Math.random()*4-2,
+		speedG:		Math.random()*4-2,
+		speedB:		Math.random()*4-2
+	};
+	
+	//绘图
+	//点
+	var aPoint=[];
+	for(var i=0;i<NUM_OF_POINT;i++)
+	{
+		aPoint[i]={
+			x:		Math.random()*oC.width,
+			y:		Math.random()*oC.height,
+			speedX:	Math.random()*MAX_SPEED-MAX_SPEED/2,
+			speedY:	Math.random()*MAX_SPEED-MAX_SPEED/2
+		};
+	}
+	
+	//影子
+	var aShadow=[];
+	
+	setInterval(function (){
+		gd.clearRect(0, 0, oC.width, oC.height);
+		
+		var a=['r', 'g', 'b'];
+		for(var i=0;i<a.length;i++)
+		{
+			var char=a[i];
+			
+			color[char]+=color['speed'+char.toUpperCase()];
+			if(color[char]>255)
+			{
+				color['speed'+char.toUpperCase()]*=-1;
+				color[char]=255;
+			}
+			else if(color[char]<0)
+			{
+				color['speed'+char.toUpperCase()]*=-1;
+				color[char]=0;
+			}
+		}
+		
+		for(var i=0;i<aPoint.length;i++)
+		{
+			//有用的——计算位置、速度
+			aPoint[i].x+=aPoint[i].speedX;
+			aPoint[i].y+=aPoint[i].speedY;
+			
+			if(aPoint[i].x<0)
+			{
+				aPoint[i].speedX*=-1;
+				aPoint[i].x=0;
+			}
+			else if(aPoint[i].x>oC.width)
+			{
+				aPoint[i].speedX*=-1;
+				aPoint[i].x=oC.width;
+			}
+			
+			if(aPoint[i].y<0)
+			{
+				aPoint[i].speedY*=-1;
+				aPoint[i].y=0;
+			}
+			else if(aPoint[i].y>oC.height)
+			{
+				aPoint[i].speedY*=-1;
+				aPoint[i].y=oC.height;
+			}
+		}
+		
+		//画出来
+		//画影子
+		for(var i=0;i<aShadow.length;i++)
+		{
+			var arr1=aShadow[i];
+			
+			gd.beginPath();
+			gd.moveTo(arr1[0].x, arr1[0].y);
+			for(var j=1;j<arr1.length;j++)
+			{
+				gd.lineTo(arr1[j].x, arr1[j].y);
+			}
+			gd.closePath();
+			
+			gd.strokeStyle='rgba('+Math.round(color.r)+', '+Math.round(color.g)+', '+Math.round(color.b)+', '+(i+1)/(NUM_OF_SHADOW+1)+')';
+			gd.stroke();
+		}
+		
+		//画物体本身
+		gd.beginPath();
+		gd.moveTo(aPoint[0].x, aPoint[0].y);
+		for(var i=1;i<aPoint.length;i++)
+		{
+			gd.lineTo(aPoint[i].x, aPoint[i].y);
+		}
+		gd.closePath();
+		
+		//gd.strokeStyle='rgb('+rnd(0,256)+','+rnd(0,256)+','+rnd(0,256)+')';
+		gd.strokeStyle='rgb('+Math.round(color.r)+', '+Math.round(color.g)+', '+Math.round(color.b)+')';
+		gd.stroke();
+		
+		//影子添加
+		var arr1=[];
+		for(var i=0;i<aPoint.length;i++)
+		{
+			arr1[i]={x: aPoint[i].x, y: aPoint[i].y};
+		}
+		aShadow.push(arr1);
+		if(aShadow.length>NUM_OF_SHADOW)
+		{
+			aShadow.shift();
+		}
+	}, 16);
+};
+</script>
+</head>
+
+<body>
+<canvas id="c1" width="800" height="600"></canvas>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

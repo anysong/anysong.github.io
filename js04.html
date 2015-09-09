@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>图片延时加载</title>
+<style>
+* { margin:0; padding:0; list-style:none; }
+ul { width:726px; margin:50px auto; }
+li { float:left; margin:20px; width:200px; height:200px; border:1px solid red;  }
+img { display:block; max-width:100%; }
+</style>
+<script>
+window.onload=window.onscroll=window.onresize=function (){
+	var aImg=document.getElementsByTagName('img');
+	
+	var scrollTop=document.documentElement.scrollTop || document.body.scrollTop;
+	
+	var clientHeight=document.documentElement.clientHeight;
+	
+	var top=scrollTop+clientHeight;
+	
+	for (var i=0; i<aImg.length; i++)
+	{
+		var jPos=getPos(aImg[i]);
+		
+		if (top > jPos.top)
+		{ // 在可视区里
+			aImg[i].src=aImg[i].getAttribute('_src');
+		}
+		
+	}
+	
+	
+	function getPos(obj)
+	{
+		var left=0;
+		var top=0;
+		
+		while (obj)
+		{
+			left+=obj.offsetLeft;
+			top+=obj.offsetTop;
+			
+			obj=obj.offsetParent;
+		}	
+		
+		return {'left':left, 'top':top};
+	}
+};
+</script>
+</head>
+
+<body>
+	<ul>
+		<li><img _src="img/man/b1.jpg" /></li>
+		<li><img _src="img/man/b2.jpg" /></li>
+		<li><img _src="img/man/b3.jpg" /></li>
+		<li><img _src="img/man/b4.jpg" /></li>
+		<li><img _src="img/man/b5.jpg" /></li>
+		<li><img _src="img/man/b6.jpg" /></li>
+		<li><img _src="img/man/b7.jpg" /></li>
+		<li><img _src="img/man/b8.jpg" /></li>
+		<li><img _src="img/man/b9.jpg" /></li>
+		<li><img _src="img/man/b10.jpg" /></li>
+		<li><img _src="img/man/b1.jpg" /></li>
+		<li><img _src="img/man/b7.jpg" /></li>
+		<li><img _src="img/man/b8.jpg" /></li>
+		<li><img _src="img/man/b9.jpg" /></li>
+		<li><img _src="img/man/b10.jpg" /></li>
+		<li><img _src="img/man/b1.jpg" /></li>
+	</ul>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
