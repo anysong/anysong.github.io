@@ -1,2 +1,370 @@
-hellow world
-my name is ingi
+<!DOCTYPE html>
+<html  ng-app="list">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    *{margin: 0;padding: 0;list-style: none;}
+    a{text-decoration: none;color: #fff;}
+    /*bg*/
+    #bg{width: 1280px;height: 705px;position: relative;transform-style: preserve-3d;transform: rotateY(0deg);transition: 1000ms all ease;}
+    #bg div{width: 100%;height: 100%;position: absolute;left: 0;top: 0;}
+    #bg div.front{transform:translateZ(640px)}
+    #bg div.front .bg-noise{background: url(img/bg_noise.png)}
+    #bg div.front .bg-window{background: url(img/bg_window.jpg) center/cover no-repeat}
+    #bg div.right .bg-noise{background: url(img/bg_noise.png)}
+    #bg div.right .bg-window{background: url(img/bg_plan.jpg) center/cover no-repeat}
+    #bg div.right{background-size: cover;transform: translateX(640px)rotateY(90deg);}
+    #bg div.back{background:url(img/04.jpg)no-repeat;background-size: cover;transform:translateZ(-640px)  rotateY(180deg);}
+    /*header*/
+    header {width: 1280px;height: 74px;position: fixed;left: 0;top: 0;}
+    header span {width: 42px;height: 42px;background:url(img/main_logo.png);background-size: cover;display:block;float: left;margin-top: 17px;margin-left: 35px;}
+    header ul {margin-top: 32px;float: right;margin-right: 20px;}
+    header ul li {width: 42px;height: 20px;margin-right: 40px;float: left}
+    header ul li a{width: 100%;height: 100%;color: #fff;text-decoration: none;font-size: 12px;display: block;line-height: 20px;text-align: center;}
+    header ul li.active{border-bottom: 2px solid red;}
+    /*page1*/
+        .page1 {position: fixed;width: 1280px;height: 536px;left: 0;top: 74px;}
+        .page1 nav{position: absolute;left: 0;top: 0;width: 148px;height: 536px;}
+        .page1 nav ul{margin-left: 88px;margin-top: 54px;position: relative;}
+        .page1 nav ul li{width: 60px;height: 60px;padding: 4px;position: relative;z-index: 1;opacity: 0;}
+        .page1 nav ul li a{width: 50px;height: 50px;text-align: center;line-height: 52px;font-size: 12px;color: #999;display: block;text-decoration: none;}
+        .page1 nav ul li a.active{color:#fff!important}
+        .page1 nav ul span{width: 60px;height: 60px;position: absolute;left: 0;top: 0;transition: 500ms all ease-in;}
+        /*.page1 nav ul span circle{transition: 500ms all linear;}*/
+        .page1 .mainList{position: absolute;left: 148px;top: 0;width: 1132px;height: 536px;}
+        .page1 .mainList ul {width: 896px;height: 504px;margin-left: 52px;margin-top: 8px;position: absolute;}
+        .page1 .mainList ul li {width: 208px;height: 147px;border-bottom: 1px solid #333;margin-right: 16px;margin-bottom: 20px;float: left;opacity: 0;transition:500ms all ease-in;}
+        .mainList ul li a {width: 100%;height: 100%;display: block}
+        .mainList ul li a img {width: 208px;height: 118px;}
+        .mainList ul li a h3 {font-size: 12px;line-height: 29px;margin-left: 8px;}
+        /*page2*/
+        .page2 {position: fixed;width: 1280px;height: 536px;left: 0;top: 74px;display: none;}
+        .page2 .content2 {width: 620px;height: 220px;margin-left: -310px;margin-top: -110px;position: absolute;top: 50%;left: 50%;}
+        .page2 .content2 span {position: absolute;left: 0;top: 0;width: 210px;height: 210px;display: block; transition: 900ms all ease;transform: translateX(600px);opacity: 0;}
+        .page2 .content2 .word {width: 380px;height: 100%;position: absolute;left: 240px;font-size: 12px; transition: 1000ms all ease;transform: translateX(600px);opacity: 0;}
+        .content2 .word p {color: #bbb;line-height: 16px;margin-bottom: 26px;}
+    </style>
+<script src="js/angular.min.js"></script>
+<script>
+    //Angular
+      var app=angular.module('list',[]);
+    app.controller('showList',function($scope,$http){
+        $scope.arr1=[];
+        $scope.type='';
+        $scope.show=function(str){
+            $http({
+            method:'GET',
+            url:'lidata'
+            }).success(function(json){
+                $scope.arr1=json[str]; 
+            }).error(function(arr){
+                alert('失败');
+                alert('点击');
+            })
+        }
+        //初始化数据
+        $http({
+            method:'GET',
+            url:'lidata'
+        }).success(function(json){
+            //首页li数据加载
+            $scope.arr1=json.js;
+        }).error(function(arr){
+            alert('失败');
+            alert('初始化');
+        })
+    })
+window.onload=function(){
+//header nav  
+;(function(){
+    var oBg=document.querySelector('#bg');
+    var oHeader=document.querySelector('header');
+    var oUL=oHeader.getElementsByTagName('ul')[0];
+    var aLi=oUL.children;
+    var aPage=document.getElementsByClassName('page');
+    var oPage=document.querySelector('.page1');
+    var oNav=oPage.children[0];
+    var oNavUl=oNav.children[0];
+    var oNavLi=oNavUl.children;
+    var oSvg1=document.getElementById('svg1');
+    var oC=oSvg1.getElementsByTagName('circle')[0]
+    var oList=document.querySelector('.mainList');
+    var oUl=oList.children[0];
+    var listLi=oUl.children;
+    //page2
+    var oPage2=document.querySelector('.page2');
+    var oCon2=document.querySelector('.content2');
+    var oSpan2=oCon2.querySelector('span');
+    var oWord=oCon2.querySelector('.word');
+    //初始化
+    function init(){
+        var num1=0;
+        var num2=listLi.length-1;
+        var timer1=null;
+        var timer2=null;
+        clearInterval(timer1);
+        timer1=setInterval(function(){
+            oNavLi[num1].style.opacity='1';
+            num1++;
+            if(num1==oNavLi.length){
+                clearInterval(timer1);
+            }
+            //左侧导航条分步加载时间
+        },80)
+        //li加载
+        clearInterval(timer2);
+        timer2=setInterval(function(){
+            (function(index){
+            setTimeout(function(){
+            listLi[index].style.transform='translateX(0px)';
+                setTimeout(function(){
+                listLi[index].style.opacity='1';
+                },30)
+
+            },Math.random()*100+10) //60+20   
+            })(num2)
+            num2--;
+            if(num2==-1){
+                clearInterval(timer2);
+                //清除page2
+                 oPage2.style.display="none";
+            }
+        },30)
+    }
+    init();
+    //点击顶部导航条
+    for(var i=0;i<aLi.length;i++){
+        (function(index){
+            aLi[index].onclick=function(){
+                for(var i=0;i<aLi.length;i++){
+                    aLi[i].className='';
+                }
+                this.className='active';
+                oBg.style.transform='rotateY('+index*(-90)+'deg)'
+                //点击首页时，效果
+                if(index==0){
+                     //opage2隐藏
+                    setTimeout(function(){
+                        oSpan2.style.opacity='0';
+                        oSpan2.style.transform="translate(600px)";
+                    },30)
+                    setTimeout(function(){
+                        oWord.style.opacity='0';
+                        oWord.style.transform="translate(600px)";
+                    },10)
+                    setTimeout(function(){
+                        init();
+                    },500)
+                    
+                }
+                //点击联系页时，效果
+                if(index==1){
+                    //移动速度重新设定
+                    for(var i=0;i<listLi.length;i++){
+                        listLi[i].style.transitionDuration="300ms";
+                    }
+                    var num1=oNavLi.length-1;
+                    var timer1=null;
+                    var timer2=null;
+                    var num2=listLi.length-1;
+                    //nav逐步消失
+                    clearInterval(timer1);
+                    timer1=setInterval(function(){
+                        oNavLi[num1].style.opacity='0';
+                        num1--;
+                        if(num1==-1){
+                            clearInterval(timer1);
+                        }                  
+                    },30)
+                    //li逐步消失 并移动
+                    clearInterval(timer2);
+                    timer2=setInterval(function(){
+                        (function(index){
+                        setTimeout(function(){
+                        listLi[index].style.transform='translateX(-'+(Math.random()*150+30)+'px)';
+                            setTimeout(function(){
+                            listLi[index].style.opacity='0';
+                            },30)   
+                        },Math.random()*100+10)   
+                        })(num2)
+                        num2--;
+                        if(num2==-1){
+                            clearInterval(timer2);
+                            //opage2显示
+                            oPage2.style.display="block";
+                            setTimeout(function(){      
+                                oSpan2.style.opacity='1';
+                                oSpan2.style.transform="translate(0)";
+                            },30)
+                            setTimeout(function(){
+                                oWord.style.opacity='1';
+                                oWord.style.transform="translate(0)";
+                            },80)       
+                        }
+                    },30)
+                    
+                }
+            }
+        })(i)
+    }
+})()
+//nav mainList
+;(function(){
+    var oPage1=document.querySelector('.page1');
+    var oNav=oPage1.getElementsByTagName('nav')[0];
+    var aLi=oNav.getElementsByTagName('li');
+    var oSpan=oNav.getElementsByTagName('span')[0];
+    var oC=oSpan.getElementsByTagName('circle')[0];
+    var aA=oNav.getElementsByTagName('a');
+    var oList=document.querySelector('.mainList');
+    var oUl=oList.children[0];
+    var listLi=oUl.children;
+    //nav点击切换
+    for(var i=0;i<aLi.length;i++){
+        (function(index){
+            aLi[index].onclick=function()
+            {
+                for(var i=0;i<aLi.length;i++){
+                    aA[i].className='';   
+                }
+                aA[index].className='active';
+                oSpan.style.top=index*68+'px';
+                moveSVG(oC,{r:20},{duration:100,complete:function()
+                {   
+                    moveSVG(oC,{r:25},{duration:400})    
+                }
+                })
+                //list列表逐步显示
+                var n2=0;
+                var timer2=null;
+                timer2=setInterval(function(){
+                    (function(index2){
+                        setTimeout(function(){
+                            //移动速度重新设定
+                        listLi[index2].style.transitionDuration="500ms";
+                        listLi[index2].style.opacity="1";
+                    },Math.random()*300+300)
+                    })(n2)
+                    n2++;
+                    if(n2>listLi.length-1){
+                        clearInterval(timer2);
+                    }
+                },30)      
+            }
+            //nav移入移出
+            aLi[index].onmouseover=function(){
+                this.children[0].style.color='#fff';
+            }
+            aLi[index].onmouseout=function(){
+                this.children[0].style.color='#999';
+            }
+        })(i)
+    }
+    
+})()
+
+function moveSVG(obj,json,option){
+        option.duration=option.duration || 1000;
+        var start={};
+        var dis={};
+        for(var name in json){
+ start[name]=parseFloat(obj.getAttribute(name)||getComputedStyle(obj,false)[name]);
+         dis[name]=json[name]-start[name];   
+        }
+        
+        var n=0;
+        var count=Math.ceil(option.duration/30);
+        clearInterval(obj.timer);
+        obj.timer=setInterval(function(){
+            n++;
+            for(var name in json){
+                var cur=start[name]+dis[name]*n/count;
+                obj.style[name]=cur;
+                obj.setAttribute(name,cur);
+            }
+            //console.log(n);
+            if(n==count){
+                clearInterval(obj.timer);
+                option.complete&&option.complete();
+            }
+        },30)
+    }
+}
+</script>
+</head>
+<body ng-controller="showList">
+    <div id="bg">
+        <div class="front">     
+            <div class="bg-window"></div>
+            <div class="bg-noise"></div>
+        </div>
+       <!-- <div class="left">2</div>-->
+        <div class="right">
+            <div class="bg-window"></div>
+            <div class="bg-noise"></div>
+        </div>
+        <!--<div class="back">4</div>-->
+    </div>
+    <header>
+        <span class="logo"></span>
+        <ul>
+            <li class="active" ><a href="javascript:;">展示</a></li>
+            <li><a href="javascript:;">联系</a></li>
+        </ul>
+    </header>
+    <div class="page1 page" >
+        <nav>
+            <ul>
+                <li><a class="active" href="javascript:;" ng-click="show('js')">Js特效</a></li>
+                <li><a href="javascript:;" ng-click="show('css')">CSS效果</a></li>
+                <li><a href="javascript:;"ng-click="show('html5')">HTML5</a></li>
+                <li><a href="javascript:;"ng-click="show('phone')">移动端</a></li>
+                <li><a href="javascript:;"ng-click="show('game')">网页游戏</a></li>
+                <li><a href="javascript:;"ng-click="show('web')">网站分享</a></li>
+                <span  id="svg1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                       <circle cx="30" cy="30" r="25" fill="red">   
+                        </circle>
+                        <path d="M1 1 L8 1 8 8 1 8Z M52 1 L59 1 59 8 52 8ZM52 52 L59 52 59 59 52 59Z M1 52 L8 52 8 59 1 59Z" stroke="#999" stroke-width="1" fill="none">
+                        </path>
+                        <path d="M4 4 L56 4 56 56 4 56Z" stroke="#999" fill="none" stroke-dasharray="3 3">
+                        
+                    </svg>
+                </span>
+            </ul>
+        </nav>
+        <div class="mainList">
+            <ul>
+                <li ng-repeat="item in arr1">
+                    <a href="{{item.src}}" target="_blank">
+                    <img src={{item.number}}>
+                    <h3>{{item.tit}}</h3>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="page2 page">
+        <div class="content2">
+             <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                       <circle cx="105" cy="105" r="100" fill="transparent" stroke="#fff">   
+                        </circle>
+                        <text x="105" fill="#fff" style="font-size:170" text-anchor="middle" y="165">联</text>
+                        <!--四个角-->
+                        <path d="M1 1L8 1 M1 1L1 8 M8 1L8 8 M1 8L8 8  M101 1L108 1 M101 1L101 8 M108 1L108 8 M101 8L108 8  M202 1L209 1 M202 1L202 8 M209 1L209 8 M202 8L209 8  M202 101L209 101 M202 101L202 108 M209 101L209 108 M202 108L209 108  M202 202L209 202 M202 202L202 209 M209 202L209 209 M202 209L209 209  M101 202L108 202 M101 202L101 209 M108 202L108 209 M101 209L108 209  M1 202L8 202 M1 202L1 209 M8 202L8 209 M1 209L8 209  M1 101L8 101 M1 101L1 108 M8 101L8 108 M1 108L8 108 " stroke-width="1" fill="none" stroke="#fff">
+                        </path>
+                        <path d="M5 5L205 5 M5 5L5 205 M205 5L205 205 M5 205L205 205 " stroke="#fff" fill="none" stroke-dasharray="3 3">
+                        
+                    </svg>
+            </span>
+             <div class="word">
+                 <p>邓颖异</p>
+                 <p>Phone:18618292737</p>
+                 <p>Email:985774505@qq.com</p>
+             </div>
+        </div>
+    </div>
+</body>
+</html>
