@@ -35,7 +35,17 @@
             alert('初始化');
         })
     })
-window.onload=function(){
+window.onload=window.onresize=function(){
+//计算rem
+    var oSize=document.getElementById('size');
+        console.log(document.documentElement.clientWidth);
+    if(document.documentElement.clientWidth<1024){
+        oSize.style.display="block";
+        return;
+    }else{
+        oSize.style.display="none";
+    }
+ document.documentElement.style.fontSize=document.documentElement.clientWidth/64+'px';
 //header nav  
 ;(function(){
     var oBg=document.querySelector('#bg');
@@ -77,7 +87,7 @@ window.onload=function(){
         timer2=setInterval(function(){
             (function(index){
             setTimeout(function(){
-            listLi[index].style.transform='translateX(0px)';
+            listLi[index].style.transform='translateX(0)';
                 setTimeout(function(){
                 listLi[index].style.opacity='1';
                 },30)
@@ -107,11 +117,11 @@ window.onload=function(){
                      //opage2隐藏
                     setTimeout(function(){
                         oSpan2.style.opacity='0';
-                        oSpan2.style.transform="translate(600px)";
+                        oSpan2.style.transform="translate(30rem)";
                     },30)
                     setTimeout(function(){
                         oWord.style.opacity='0';
-                        oWord.style.transform="translate(600px)";
+                        oWord.style.transform="translate(30rem)";
                     },10)
                     setTimeout(function(){
                         init();
@@ -189,7 +199,7 @@ window.onload=function(){
                     aA[i].className='';   
                 }
                 aA[index].className='active';
-                oSpan.style.top=index*68+'px';
+                oSpan.style.top=index*3.4+'rem';
                 moveSVG(oC,{r:20},{duration:100,complete:function()
                 {   
                     moveSVG(oC,{r:25},{duration:400})    
@@ -254,6 +264,7 @@ function moveSVG(obj,json,option){
 </script>
 </head>
 <body ng-controller="showList">
+    <div id="size">请放大浏览器</div>
     <div id="bg">
         <div class="front">     
             <div class="bg-window"></div>
@@ -281,7 +292,7 @@ function moveSVG(obj,json,option){
                 <li><a href="javascript:;"ng-click="show('game')">网页游戏</a></li>
                 <li><a href="javascript:;"ng-click="show('web')">网站分享</a></li>
                 <span  id="svg1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 60 60">
                        <circle cx="30" cy="30" r="25" fill="red">   
                         </circle>
                         <path d="M1 1 L8 1 8 8 1 8Z M52 1 L59 1 59 8 52 8ZM52 52 L59 52 59 59 52 59Z M1 52 L8 52 8 59 1 59Z" stroke="#999" stroke-width="1" fill="none">
@@ -306,10 +317,10 @@ function moveSVG(obj,json,option){
     <div class="page2 page">
         <div class="content2">
              <span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                    <svg id="svg2" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 210 210">
                        <circle cx="105" cy="105" r="100" fill="transparent" stroke="#fff">   
                         </circle>
-                        <text x="105" fill="#fff" style="font-size:170" text-anchor="middle" y="165">联</text>
+                        <text x="105" fill="#fff" style="font-size:170px" text-anchor="middle" y="165">联</text>
                         <!--四个角-->
                         <path d="M1 1L8 1 M1 1L1 8 M8 1L8 8 M1 8L8 8  M101 1L108 1 M101 1L101 8 M108 1L108 8 M101 8L108 8  M202 1L209 1 M202 1L202 8 M209 1L209 8 M202 8L209 8  M202 101L209 101 M202 101L202 108 M209 101L209 108 M202 108L209 108  M202 202L209 202 M202 202L202 209 M209 202L209 209 M202 209L209 209  M101 202L108 202 M101 202L101 209 M108 202L108 209 M101 209L108 209  M1 202L8 202 M1 202L1 209 M8 202L8 209 M1 209L8 209  M1 101L8 101 M1 101L1 108 M8 101L8 108 M1 108L8 108 " stroke-width="1" fill="none" stroke="#fff">
                         </path>

@@ -1,39 +1,45 @@
- *{margin: 0;padding: 0;list-style: none;}
+    *{margin: 0;padding: 0;list-style: none;}
+    html{font-size: 20px;}
     a{text-decoration: none;color: #fff;}
+    /*size*/
+    #size {position: fixed;width: 100%;height: 100%;background: #000;font-size: 16px;color: #fff;text-align: center;z-index: 1000;}
     /*bg*/
-    #bg{width: 1280px;height: 705px;position: relative;transform-style: preserve-3d;transform: rotateY(0deg);transition: 1000ms all ease;}
+    #bg{width: 64rem;height: 35.25rem;position: relative;transform-style: preserve-3d;transform: rotateY(0deg);transition: 1000ms all ease;}
     #bg div{width: 100%;height: 100%;position: absolute;left: 0;top: 0;}
-    #bg div.front{transform:translateZ(640px)}
+    #bg div.front{transform:translateZ(32rem)}
     #bg div.front .bg-noise{background: url(../img/bg_noise.png)}
     #bg div.front .bg-window{background: url(../img/bg_window.jpg) center/cover no-repeat}
     #bg div.right .bg-noise{background: url(../img/bg_noise.png)}
     #bg div.right .bg-window{background: url(../img/bg_plan.jpg) center/cover no-repeat}
-    #bg div.right{background-size: cover;transform: translateX(640px)rotateY(90deg);}
+    #bg div.right{background-size: cover;transform: translateX(32rem)rotateY(90deg);}
     /*header*/
-    header {width: 1280px;height: 74px;position: fixed;left: 0;top: 0;}
-    header span {width: 42px;height: 42px;background:url(../img/main_logo.png);background-size: cover;display:block;float: left;margin-top: 17px;margin-left: 35px;}
-    header ul {margin-top: 32px;float: right;margin-right: 20px;}
-    header ul li {width: 42px;height: 20px;margin-right: 40px;float: left}
-    header ul li a{width: 100%;height: 100%;color: #fff;text-decoration: none;font-size: 12px;display: block;line-height: 20px;text-align: center;}
-    header ul li.active{border-bottom: 2px solid red;}
+    header {width: 64rem;height: 3.7rem;position: fixed;left: 0;top: 0;}
+    header span {width: 2.1rem;height: 2.1rem;background:url(../img/main_logo.png);background-size: cover;display:block;float: left;margin-top: 0.85rem;margin-left: 1.75rem;}
+    header ul {margin-top: 1.6rem;float: right;margin-right: 1rem;}
+    header ul li {width: 2.1rem;height: 1rem;margin-right: 2rem;float: left}
+    header ul li a{width: 100%;height: 100%;color: #fff;text-decoration: none;font-size: 0.6rem;display: block;line-height: 1rem;text-align: center;}
+    header ul li.active{border-bottom: 0.1rem solid red;}
     /*page1*/
-        .page1 {position: fixed;width: 1280px;height: 536px;left: 0;top: 74px;}
-        .page1 nav{position: absolute;left: 0;top: 0;width: 148px;height: 536px;}
-        .page1 nav ul{margin-left: 88px;margin-top: 54px;position: relative;}
-        .page1 nav ul li{width: 60px;height: 60px;padding: 4px;position: relative;z-index: 1;opacity: 0;}
-        .page1 nav ul li a{width: 50px;height: 50px;text-align: center;line-height: 52px;font-size: 12px;color: #999;display: block;text-decoration: none;}
+        .page1 {position: fixed;width: 64rem;height: 26.8rem;left: 0;top: 3.7rem;}
+        .page1 nav{position: absolute;left: 0;top: 0;width: 7.4rem;height: 26.8rem;}
+        .page1 nav ul{margin-left: 4.4rem;margin-top: 2.7rem;position: relative;}
+        .page1 nav ul li{width:3rem;height: 3rem;padding: 0.2rem;position: relative;z-index: 1;opacity: 0;}
+        .page1 nav ul li a{width: 2.5rem;height: 2.5rem;text-align: center;line-height: 2.6rem;font-size: 0.6rem;color: #999;display: block;text-decoration: none;}
         .page1 nav ul li a.active{color:#fff!important}
-        .page1 nav ul span{width: 60px;height: 60px;position: absolute;left: 0;top: 0;transition: 500ms all ease-in;}
+        .page1 nav ul span{width: 3rem;height: 3rem;position: absolute;left: 0;top: 0;transition: 500ms all ease-in;}
+        .page1 nav ul span svg {width: 3rem;height: 3rem;}
         /*.page1 nav ul span circle{transition: 500ms all linear;}*/
-        .page1 .mainList{position: absolute;left: 148px;top: 0;width: 1132px;height: 536px;}
-        .page1 .mainList ul {width: 896px;height: 504px;margin-left: 52px;margin-top: 8px;position: absolute;}
-        .page1 .mainList ul li {width: 208px;height: 147px;border-bottom: 1px solid #333;margin-right: 16px;margin-bottom: 20px;float: left;opacity: 0;transition:500ms all ease-in;}
+        .page1 .mainList{position: absolute;left: 7.4rem;top: 0;width: 56.6rem;height: 26.8rem;}
+        .page1 .mainList ul {width: 44.8rem;height: 25.2rem;margin-left: 2.6rem;margin-top: 0.4rem;position: absolute;}
+        .page1 .mainList ul li {width: 10.4rem;height: 7.35rem;border-bottom: 1px solid #333;margin-right: 0.8rem;margin-bottom: 1rem;float: left;opacity: 0;transition:500ms all ease-in;}
         .mainList ul li a {width: 100%;height: 100%;display: block}
-        .mainList ul li a img {width: 208px;height: 118px;}
-        .mainList ul li a h3 {font-size: 12px;line-height: 29px;margin-left: 8px;}
+        .mainList ul li a img {width: 10.4rem;height: 5.9rem;}
+.mainList ul li a h3 {font-size: 0.6rem;line-height: 1.45rem;margin-left: 0.4rem;}
         /*page2*/
-        .page2 {position: fixed;width: 1280px;height: 536px;left: 0;top: 74px;display: none;}
-        .page2 .content2 {width: 620px;height: 220px;margin-left: -310px;margin-top: -110px;position: absolute;top: 50%;left: 50%;}
-        .page2 .content2 span {position: absolute;left: 0;top: 0;width: 210px;height: 210px;display: block; transition: 900ms all ease;transform: translateX(600px);opacity: 0;}
-        .page2 .content2 .word {width: 380px;height: 100%;position: absolute;left: 240px;font-size: 12px; transition: 1000ms all ease;transform: translateX(600px);opacity: 0;}
-        .content2 .word p {color: #bbb;line-height: 16px;margin-bottom: 26px;}
+        .page2 {position: fixed;width: 64rem;height: 26.8rem;left: 0;top: 3.7rem;display: none;}
+        .page2 .content2 {width: 31rem;height: 11rem;margin-left: -15.5rem;margin-top: -5.5rem;position: absolute;top: 50%;left: 50%;}
+        .page2 .content2 span {position: absolute;left: 0;top: 0;width: 10.5rem;height: 10.5rem;display: block; transition: 900ms all ease;transform: translateX(30rem);opacity: 0;}
+         #svg2 {width: 10.5rem;height: 10.5rem;}
+        .page2 .content2 .word {width: 19rem;height: 100%;position: absolute;left: 12rem;font-size: 0.6rem; transition: 1000ms all ease;transform: translateX(30rem);opacity: 0;}
+   
+        .content2 .word p {color: #bbb;line-height: 0.8rem;margin-bottom: 1.3rem;}
