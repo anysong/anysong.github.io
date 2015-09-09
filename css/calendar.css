@@ -1,0 +1,14 @@
+@charset "utf-8";
+/*版权 北京智能社©, 保留所有权利*/
+.calendar { display:none; position:absolute; width:210px; border:1px solid #ccc; }
+.calendar span { display:block; height:40px; line-height:40px; text-align:center; }
+.calendar li { list-style:none; }
+.calendar ol, .calendar ul { overflow:hidden; }
+.calendar li { float:left; width:30px; height:30px; line-height:30px; text-align:center; }
+.calendar .week, .calendar .today { color:#f40; }
+.calendar .today { font-size:12px; }
+.calendar a { position:absolute; top:0; height:40px; line-height:40px; }
+.calendar .next { right:0; }
+.calendar .past { color:#ccc; }
+
+
