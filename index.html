@@ -3,48 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <style>
-    *{margin: 0;padding: 0;list-style: none;}
-    a{text-decoration: none;color: #fff;}
-    /*bg*/
-    #bg{width: 1280px;height: 705px;position: relative;transform-style: preserve-3d;transform: rotateY(0deg);transition: 1000ms all ease;}
-    #bg div{width: 100%;height: 100%;position: absolute;left: 0;top: 0;}
-    #bg div.front{transform:translateZ(640px)}
-    #bg div.front .bg-noise{background: url(img/bg_noise.png)}
-    #bg div.front .bg-window{background: url(img/bg_window.jpg) center/cover no-repeat}
-    #bg div.right .bg-noise{background: url(img/bg_noise.png)}
-    #bg div.right .bg-window{background: url(img/bg_plan.jpg) center/cover no-repeat}
-    #bg div.right{background-size: cover;transform: translateX(640px)rotateY(90deg);}
-    #bg div.back{background:url(img/04.jpg)no-repeat;background-size: cover;transform:translateZ(-640px)  rotateY(180deg);}
-    /*header*/
-    header {width: 1280px;height: 74px;position: fixed;left: 0;top: 0;}
-    header span {width: 42px;height: 42px;background:url(img/main_logo.png);background-size: cover;display:block;float: left;margin-top: 17px;margin-left: 35px;}
-    header ul {margin-top: 32px;float: right;margin-right: 20px;}
-    header ul li {width: 42px;height: 20px;margin-right: 40px;float: left}
-    header ul li a{width: 100%;height: 100%;color: #fff;text-decoration: none;font-size: 12px;display: block;line-height: 20px;text-align: center;}
-    header ul li.active{border-bottom: 2px solid red;}
-    /*page1*/
-        .page1 {position: fixed;width: 1280px;height: 536px;left: 0;top: 74px;}
-        .page1 nav{position: absolute;left: 0;top: 0;width: 148px;height: 536px;}
-        .page1 nav ul{margin-left: 88px;margin-top: 54px;position: relative;}
-        .page1 nav ul li{width: 60px;height: 60px;padding: 4px;position: relative;z-index: 1;opacity: 0;}
-        .page1 nav ul li a{width: 50px;height: 50px;text-align: center;line-height: 52px;font-size: 12px;color: #999;display: block;text-decoration: none;}
-        .page1 nav ul li a.active{color:#fff!important}
-        .page1 nav ul span{width: 60px;height: 60px;position: absolute;left: 0;top: 0;transition: 500ms all ease-in;}
-        /*.page1 nav ul span circle{transition: 500ms all linear;}*/
-        .page1 .mainList{position: absolute;left: 148px;top: 0;width: 1132px;height: 536px;}
-        .page1 .mainList ul {width: 896px;height: 504px;margin-left: 52px;margin-top: 8px;position: absolute;}
-        .page1 .mainList ul li {width: 208px;height: 147px;border-bottom: 1px solid #333;margin-right: 16px;margin-bottom: 20px;float: left;opacity: 0;transition:500ms all ease-in;}
-        .mainList ul li a {width: 100%;height: 100%;display: block}
-        .mainList ul li a img {width: 208px;height: 118px;}
-        .mainList ul li a h3 {font-size: 12px;line-height: 29px;margin-left: 8px;}
-        /*page2*/
-        .page2 {position: fixed;width: 1280px;height: 536px;left: 0;top: 74px;display: none;}
-        .page2 .content2 {width: 620px;height: 220px;margin-left: -310px;margin-top: -110px;position: absolute;top: 50%;left: 50%;}
-        .page2 .content2 span {position: absolute;left: 0;top: 0;width: 210px;height: 210px;display: block; transition: 900ms all ease;transform: translateX(600px);opacity: 0;}
-        .page2 .content2 .word {width: 380px;height: 100%;position: absolute;left: 240px;font-size: 12px; transition: 1000ms all ease;transform: translateX(600px);opacity: 0;}
-        .content2 .word p {color: #bbb;line-height: 16px;margin-bottom: 26px;}
-    </style>
+    <link rel="stylesheet" href="css/common.css">
+    <style></style>
 <script src="js/angular.min.js"></script>
 <script>
     //Angular
@@ -299,12 +259,10 @@ function moveSVG(obj,json,option){
             <div class="bg-window"></div>
             <div class="bg-noise"></div>
         </div>
-       <!-- <div class="left">2</div>-->
         <div class="right">
             <div class="bg-window"></div>
             <div class="bg-noise"></div>
         </div>
-        <!--<div class="back">4</div>-->
     </div>
     <header>
         <span class="logo"></span>
